@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Chip from "@mui/material/Chip";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -14,6 +15,7 @@ import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 import Fingerprint from "@mui/icons-material/Fingerprint";
 import CardActions from "@mui/material/CardActions";
+import { FeedBack } from "./FeedBack";
 
 import {
   useAccount,
@@ -181,9 +183,11 @@ const OtherUser = () => {
     );
   };
 
+
+
   return (
     <Container maxWidth="sm">
-      <div
+      {/* <div
         style={{
           padding: 10,
           marginTop: 20,
@@ -191,7 +195,7 @@ const OtherUser = () => {
         }}
       >
         <b>USER : {address}</b>
-      </div>
+      </div> */}
       <div
         style={{
           marginTop: 20,
@@ -199,60 +203,30 @@ const OtherUser = () => {
           paddingBottom: 5,
         }}
       >
-        <Divider textAlign="left">All feedbacks</Divider>
+        <Divider textAlign="left">Tout les avis</Divider>
         {hash && (
           <Divider style={{ marginTop: 10 }}>
             <Chip label={hash} size="small" />
           </Divider>
         )}
-        {feedbacks &&
-          feedbacks.map(
+          <Grid container spacing={2}>
+          {feedbacks &&
+            feedbacks.map(
             (row, i) =>
               row.productId != 0 &&
               row.allowed != false && (
-                <Box
-                  key={crypto.randomUUID()}
-                  sx={{ minWidth: 275, marginTop: 2 }}
-                >
-                  <Card variant="outlined">
-                    <CardContent>
-                      <ChildComponent id={row.productId} />
-                      PRODUCT ID : {row.productId}
-                      <br />
-                      COMPANY ID : {row.compagnyId}
-                      <Box
-                        sx={{
-                          "& > legend": { mt: 2 },
-                        }}
-                      >
-                        <Typography component="legend">Rate</Typography>
-                        <Rating value={row.note} readOnly />
-                      </Box>
-                      <Box
-                        sx={{
-                          "& > legend": { mt: 2 },
-                        }}
-                      >
-                        <Typography component="legend">User comment</Typography>
-                        <div style={{ fontSize: 13 }}>{row.comment}</div>
-                      </Box>
-                    </CardContent>
-                    <CardActions>
-                      <Stack direction="row" spacing={1}>
-                        <IconButton
-                          aria-label="fingerprint"
-                          color="secondary"
-                          onClick={() => handleSubmit(i)}
-                        >
-                          <Fingerprint />
-                        </IconButton>
-                      </Stack>
-                      <div>{Number(row.likeCount)}</div>
-                    </CardActions>
-                  </Card>
-                </Box>
+                <>
+                <Grid item xs={12} sm={6} key={crypto.randomUUID()}>
+                  <Box
+                    key={crypto.randomUUID()}
+                    sx={{ minWidth: 275, marginTop: 2 }}>
+                    <FeedBack likeCount={Number(row.likeCount)} handleLike={() => handleSubmit(i)} description={row.comment} owner={row.owner} company={row.compagnyId} productId={row.productId} note={Number(row.likeCount)} />
+                  </Box>
+                </Grid>
+                </> 
               )
           )}
+          </Grid>
       </div>
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}

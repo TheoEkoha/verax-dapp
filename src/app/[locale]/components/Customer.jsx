@@ -210,7 +210,7 @@ const Customer = () => {
       <div>
         {productDetails && (
           <Typography variant="h5" component="div">
-            Product reference : {productDetails.productRef}
+            Référence produit : {productDetails.productRef}
           </Typography>
         )}
       </div>
@@ -226,9 +226,9 @@ const Customer = () => {
           backgroundColor: "#ECF0F1",
         }}
       >
-        <b>CUSTOMERS</b>
+        <b>Clients</b>
         <br />
-        CUSTOMER : {address}
+        Client : {address}
       </div>
 
       <div
@@ -238,7 +238,7 @@ const Customer = () => {
           paddingBottom: 5,
         }}
       >
-        <Divider textAlign="left">Rate your products</Divider>
+        <Divider textAlign="left">Notez vos produits</Divider>
         {hash && (
           <Divider style={{ marginTop: 10 }}>
             <Chip label={hash} size="small" />
@@ -253,15 +253,15 @@ const Customer = () => {
                   <Card variant="outlined">
                     <CardContent>
                       <ChildComponent id={row.productId} />
-                      PRODUCT ID : {row.productId}
+                      Identifiant Produit : {row.productId}
                       <br />
-                      COMPAGNY ID : {row.compagnyId}
+                      Identifiant Compagnie : {row.compagnyId}
                       <Box
                         sx={{
                           "& > legend": { mt: 2 },
                         }}
                       >
-                        <Typography component="legend">Your rating</Typography>
+                        <Typography component="legend">Note</Typography>
                         <Rating
                           name={`rating-${row.productId}`}
                           value={ratings[row.productId] || 0}
@@ -275,9 +275,9 @@ const Customer = () => {
                           "& > legend": { mt: 2 },
                         }}
                       >
-                        <Typography component="legend">Your comment</Typography>
+                        <Typography component="legend">Commentaire</Typography>
                         <TextField
-                          label="How was your experience ?"
+                          label="Comment était votre expérience ?"
                           variant="outlined"
                           fullWidth
                           margin="normal"
@@ -295,7 +295,7 @@ const Customer = () => {
                           handleSubmit(row.productId, row.compagnyId)
                         }
                       >
-                        Rate
+                        Valider
                       </Button>
                     </CardActions>
                   </Card>

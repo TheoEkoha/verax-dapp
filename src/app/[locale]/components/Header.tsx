@@ -18,32 +18,19 @@ export const Header: FC<Props> = ({ locale }) => {
       <Link lang={locale} href='/'>
         <div className='flex flex-row items-center'>
           <div className='mb-2 h-14 w-14'>
-            <LogoIcon />
+          <Box sx={{ mb: 2, width: 56, height: 86 }}>
+            <LogoIcon/>
+            </Box>
           </div>
           <strong className='mx-2 select-none'>Verax</strong>
         </div>
       </Link>
       <div className='flex flex-row items-center gap-3'>
         <nav className='mr-10 inline-flex gap-5'>
-          {/* <Link lang={locale} href={`/about`}>
-            {t('About')}
-          </Link>
-          <a href=''>{t('Support')}</a>
-          <a href=''>{t('Other')}</a> */}
         </nav>
-        <ThemeSwitch />
-        {/* <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0 }}>
             <ConnectButton showBalance={true}/>
-          </Box> */}
-        {/* <LangSwitcher /> */}
-        <a
-          href='https://github.com/yahyaparvar/nextjs-template'
-          target='_blank'
-        >
-          <div className='size-8'>
-            <GithubIcon />
-          </div>
-        </a>
+          </Box>
       </div>
     </div>
   )
