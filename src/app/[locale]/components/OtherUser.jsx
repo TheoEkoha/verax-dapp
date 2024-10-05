@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -16,33 +16,35 @@ import IconButton from "@mui/material/IconButton";
 import Fingerprint from "@mui/icons-material/Fingerprint";
 import CardActions from "@mui/material/CardActions";
 import { FeedBack } from "./FeedBack";
-
+import Customer from "./Customer"; // Si c'est un export par défaut
 import {
   useAccount,
   useWriteContract,
   useWaitForTransactionReceipt,
   useReadContract,
 } from "wagmi";
-
 import { contractAddress, contractAbi } from "../../../constants";
 import { publicClient } from "../../../utils/client";
+import { Button, List, ListItem } from "@mui/material"; // Importez ces composants pour le menu
 
 const OtherUser = () => {
   const { address } = useAccount();
-
   const [feedbacks, setFeedbacks] = useState([]);
+  const [activeTab, setActiveTab] = useState("allFeedbacks"); // État pour le menu
 
   const [stateSnack, setStateSnack] = useState({
     stat: false,
     type: "error",
     message: "Error occurred while processing your request",
   });
+
   const handleOpenSnack = (input) =>
     setStateSnack({
       stat: input.stat,
       type: input.type,
       message: input.message,
     });
+
   const handleCloseSnack = () =>
     setStateSnack({
       stat: false,
@@ -84,21 +86,6 @@ const OtherUser = () => {
     });
   };
 
-  const getProductDetailsById = async (idProduct) => {
-    try {
-      const data = await publicClient.readContract({
-        address: contractAddress,
-        abi: contractAbi,
-        functionName: "getProductDetailsById",
-        account: address,
-        args: [idProduct],
-      });
-      return data;
-    } catch (error) {
-      handleOpenSnack({ stat: true, type: "error", message: error.message });
-    }
-  };
-
   const getAllFeedback = async () => {
     try {
       const data = await publicClient.readContract({
@@ -117,117 +104,109 @@ const OtherUser = () => {
           likeCount: row.likeCount,
         }))
       );
-      console.log(data);
     } catch (error) {
       handleOpenSnack({ stat: true, type: "error", message: error.message });
     }
-  };
-
-  const handleSubmit = async (_feedbackId) => {
-    await like(_feedbackId);
-    console.log(`Feedback : ${_feedbackId}`);
   };
 
   useEffect(() => {
     getAllFeedback();
   }, []);
 
-  const {
-    isLoading: isConfirming,
-    isSuccess: isConfirmed,
-    error: errorConfirmation,
-  } = useWaitForTransactionReceipt({
-    hash,
-  });
-  useEffect(() => {
-    if (isConfirmed) {
-      getAllFeedback();
-      handleOpenSnack({
-        stat: true,
-        type: "success",
-        message: "Transaction has been registered",
-      });
-    }
-    if (errorConfirmation) {
-      handleOpenSnack({
-        stat: true,
-        type: "error",
-        message: errorConfirmation.message,
-      });
-    }
-  }, [isConfirmed, errorConfirmation]);
-
-  const ChildComponent = ({ id }) => {
-    const [productDetails, setProductDetails] = useState(null);
-
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const data = await getProductDetailsById(id);
-          setProductDetails(data);
-        } catch (error) {
-          console.error("Error fetching product details:", error);
-        }
-      };
-      fetchData();
-    }, [id]);
-
-    return (
-      <div>
-        {productDetails && (
-          <Typography variant="h5" component="div">
-            Product reference : {productDetails.productRef}
-          </Typography>
-        )}
-      </div>
-    );
-  };
-
-
-
   return (
-    <Container maxWidth="sm">
-      {/* <div
-        style={{
-          padding: 10,
-          marginTop: 20,
-          backgroundColor: "#ECF0F1",
-        }}
-      >
-        <b>USER : {address}</b>
-      </div> */}
-      <div
-        style={{
-          marginTop: 20,
-          marginBottom: 20,
-          paddingBottom: 5,
-        }}
-      >
-        <Divider textAlign="left">Tout les avis</Divider>
-        {hash && (
-          <Divider style={{ marginTop: 10 }}>
-            <Chip label={hash} size="small" />
-          </Divider>
-        )}
-          <Grid container spacing={2}>
-          {feedbacks &&
-            feedbacks.map(
-            (row, i) =>
-              row.productId != 0 &&
-              row.allowed != false && (
-                <>
-                <Grid item xs={12} sm={6} key={crypto.randomUUID()}>
-                  <Box
-                    key={crypto.randomUUID()}
-                    sx={{ minWidth: 275, marginTop: 2 }}>
-                    <FeedBack likeCount={Number(row.likeCount)} handleLike={() => handleSubmit(i)} description={row.comment} owner={row.owner} company={row.compagnyId} productId={row.productId} note={Number(row.likeCount)} />
-                  </Box>
-                </Grid>
-                </> 
-              )
-          )}
-          </Grid>
-      </div>
+    <Container maxWidth="lg">
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          {/* Menu vertical */}
+          <Box sx={{ borderRight: '1px solid #ccc', height: '100vh', padding: 2 }}>
+            <List>
+              <ListItem>
+                <Button onClick={() => setActiveTab("allFeedbacks")}>Tout les avis</Button>
+              </ListItem>
+              <ListItem>
+                <Button onClick={() => setActiveTab("myFeedbacks")}>Mes avis</Button>
+              </ListItem>
+              <ListItem>
+                <Button onClick={() => setActiveTab("rateProduct")}>Noter un produit</Button>
+              </ListItem>
+            </List>
+          </Box>
+        </Grid>
+        <Grid item xs={9}>
+          {activeTab === "allFeedbacks" && (
+          <Box sx={{ padding: 2 }}>
+            <Divider textAlign="left">Tout les avis</Divider>
+            {hash && (
+              <Divider style={{ marginTop: 10 }}>
+                <Chip label={hash} size="small" />
+              </Divider>
+            )}
+              <Grid container spacing={2}>
+                {feedbacks &&
+                  feedbacks.map((row, i) =>
+                    row.productId !== 0 && row.allowed !== false ? (
+                      <Grid item xs={12} sm={6} key={row.id}>
+                        <Box sx={{ minWidth: 275, marginTop: 2 }}>
+                          <FeedBack
+                            likeCount={Number(row.likeCount)}
+                            handleLike={() => like(row.id)}
+                            description={row.comment}
+                            owner={row.owner}
+                            company={row.compagnyId}
+                            productId={row.productId}
+                            note={Number(row.note)}
+                          />
+                        </Box>
+                      </Grid>
+                    ) : null
+                  )}
+              </Grid>
+            </Box>
+            )}
+            {activeTab === "myFeedbacks" && (
+          <Box sx={{ padding: 2 }}>
+            <Divider textAlign="left">Mes avis</Divider>
+            {hash && (
+              <Divider style={{ marginTop: 10 }}>
+                <Chip label={hash} size="small" />
+              </Divider>
+            )}
+              <Grid container spacing={2}>
+                {feedbacks &&
+                  feedbacks.map((row, i) =>
+                    row.productId !== 0 && row.allowed !== false ? (
+                      <Grid item xs={12} sm={6} key={row.id}>
+                        <Box sx={{ minWidth: 275, marginTop: 2 }}>
+                          <FeedBack
+                            likeCount={Number(row.likeCount)}
+                            handleLike={() => like(row.id)}
+                            description={row.comment}
+                            owner={row.owner}
+                            company={row.compagnyId}
+                            productId={row.productId}
+                            note={Number(row.note)}
+                          />
+                        </Box>
+                      </Grid>
+                    ) : null
+                  )}
+              </Grid>
+            </Box>
+            )}
+            {activeTab === "rateProduct" && (
+          <Box sx={{ padding: 2 }}>
+            <Divider textAlign="left">Noter un produit</Divider>
+            {hash && (
+              <Divider style={{ marginTop: 10 }}>
+                <Chip label={hash} size="small" />
+              </Divider>
+            )}
+            
+            <Customer isAcustomer={true} />
+            </Box>
+            )}
+        </Grid>
+      </Grid>
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={stateSnack.stat}
@@ -239,9 +218,7 @@ const OtherUser = () => {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          {stateSnack.message
-            ? stateSnack.message
-            : "Error occurred while processing your request"}
+          {stateSnack.message}
         </Alert>
       </Snackbar>
     </Container>

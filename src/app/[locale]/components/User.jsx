@@ -8,11 +8,11 @@ import OtherUserComponent from "./OtherUser";
 const User = ({ isAcustomer, isAcompagnyOwner }) => {
   return (
     <>
-      {isAcustomer && <CustomerComponent isAcustomer={isAcustomer} />}
+      {/* {isAcustomer && <CustomerComponent isAcustomer={isAcustomer} />} */}
       {isAcompagnyOwner && (
         <CompagnyComponent isAcompagnyOwner={isAcompagnyOwner} />
       )}
-      {!isAcompagnyOwner && !isAcustomer && <OtherUserComponent />}
+      {!isAcompagnyOwner && <OtherUserComponent />}
     </>
   );
 };
