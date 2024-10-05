@@ -1,10 +1,61 @@
 import { useTranslations } from 'next-intl'
 import Button from './components/Button'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+
+
+import OwnerComponent from "./components/Owner";
+import UserComponent from "./components/User";
+
+import { contractAddress, contractAbi } from "../../constants";
+import { useOwnerContext } from "../../context/owner";
+import {
+  useAccount,
+  useWriteContract,
+  useWaitForTransactionReceipt,
+  useReadContract,
+} from "wagmi";
 
 export default function DashboardPage() {
+  // const { address, isConnected } = useAccount();
+  const {
+    owner,
+    ownerLoading,
+    refetchOwner,
+    ownerPending,
+    contractOwner,
+    setOwner,
+  } = useOwnerContext();
+
+  // const {
+  //   data: isAcompagnyOwner,
+  //   error: errorisAcompagnyOwner,
+  //   isPending: isPendingIsAcompagnyOwner,
+  //   refetch: refetchIsAcompagnyOwner,
+  // } = useReadContract({
+  //   address: contractAddress,
+  //   abi: contractAbi,
+  //   functionName: "isAcompagnyOwner",
+  //   account: address,
+  // });
+
+  // const {
+  //   data: isAcustomer,
+  //   error: errorIsAcustomer,
+  //   isPending: isPendingIsAcustomer,
+  //   refetch: refetchIsAcustomer,
+  // } = useReadContract({
+  //   address: contractAddress,
+  //   abi: contractAbi,
+  //   functionName: "isAcustomer",
+  //   account: address,
+  // });
+
   const t = useTranslations('')
   return (
     <div>
+      {/* {
+        address ? (<>{address === contractOwner ? <OwnerComponent /> : <UserComponent isAcustomer={isAcustomer} isAcompagnyOwner={isAcompagnyOwner}/>}</>) : 'ook'
+      } */}
       <section className='flex flex-col items-center justify-center py-24'>
         <h1 className='text-center text-7xl font-extrabold leading-tight'>
           {t('An')}{' '}
@@ -20,22 +71,7 @@ export default function DashboardPage() {
           )}
         </div>
         <div className='mt-4 flex flex-row gap-4'>
-          <a
-            href='https://github.com/new?template_name=nextjs-template&template_owner=yahyaparvar'
-            target='_blank'
-          >
-            <Button rounded size='large'>
-              {t('Use_Template')}
-            </Button>
-          </a>
-          <a
-            href='https://github.com/yahyaparvar/nextjs-template'
-            target='_blank'
-          >
-            <Button rounded size='large' variant='secondary'>
-              {t('Learn_More')}
-            </Button>
-          </a>
+          <ConnectButton showBalance={true}/>
         </div>
       </section>
       <section className='bg-background-secondary py-20 max-lg:py-10'>

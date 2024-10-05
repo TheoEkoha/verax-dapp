@@ -4,8 +4,10 @@ import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import GithubIcon from '../../icons/github'
 import LogoIcon from '../../icons/logo'
+import Box from "@mui/material/Box";
 import LangSwitcher from './LangSwitcher'
 import ThemeSwitch from './ThemeSwitch'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 interface Props {
   locale: string
 }
@@ -18,19 +20,22 @@ export const Header: FC<Props> = ({ locale }) => {
           <div className='mb-2 h-14 w-14'>
             <LogoIcon />
           </div>
-          <strong className='mx-2 select-none'>Template</strong>
+          <strong className='mx-2 select-none'>Verax</strong>
         </div>
       </Link>
       <div className='flex flex-row items-center gap-3'>
         <nav className='mr-10 inline-flex gap-5'>
-          <Link lang={locale} href={`/about`}>
+          {/* <Link lang={locale} href={`/about`}>
             {t('About')}
           </Link>
           <a href=''>{t('Support')}</a>
-          <a href=''>{t('Other')}</a>
+          <a href=''>{t('Other')}</a> */}
         </nav>
         <ThemeSwitch />
-        <LangSwitcher />
+        {/* <Box sx={{ flexGrow: 0 }}>
+            <ConnectButton showBalance={true}/>
+          </Box> */}
+        {/* <LangSwitcher /> */}
         <a
           href='https://github.com/yahyaparvar/nextjs-template'
           target='_blank'
