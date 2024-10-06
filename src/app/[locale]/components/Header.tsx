@@ -8,10 +8,28 @@ import Box from "@mui/material/Box";
 import LangSwitcher from './LangSwitcher'
 import ThemeSwitch from './ThemeSwitch'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useEffect } from 'react';
+
 interface Props {
   locale: string
 }
+
+
 export const Header: FC<Props> = ({ locale }) => {
+
+  // useEffect(() => {
+  //   // Charger dynamiquement le script côté client
+  //   const script = document.createElement('script');
+  //   script.src = '/web3-login.js';
+  //   script.async = true;
+  //   document.body.appendChild(script);
+
+  //   return () => {
+  //     // Nettoyer le script si nécessaire lors du démontage du composant
+  //     document.body.removeChild(script);
+  //   };
+  // }, []);
+
   const t = useTranslations('')
   return (
     <div className='mx-auto flex max-w-screen-2xl flex-row items-center justify-between p-5'>
@@ -31,6 +49,7 @@ export const Header: FC<Props> = ({ locale }) => {
           <Box sx={{ flexGrow: 0 }}>
             <ConnectButton showBalance={true}/>
           </Box>
+          {/* <div id="connect">OKOKOKOKOKOKOKOKOKOKOKOKOO</div> */}
       </div>
     </div>
   )

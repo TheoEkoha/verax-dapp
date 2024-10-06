@@ -41,6 +41,9 @@ export default function RootLayout({
   const messages = useMessages();
   return (
     <html lang={locale} dir={locale === 'ar' || locale === 'fa' ? 'rtl' : 'ltr'} className={`${space_grotesk.variable} ${rubik.variable} scroll-smooth`} suppressHydrationWarning>
+    {/* <head>
+      <script src="/web3-login.js" async></script>
+    </head> */}
     <body>
       <RainbowKitProviderImport>
       <OwnerContextProvider>

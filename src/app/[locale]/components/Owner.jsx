@@ -148,7 +148,7 @@ const Owner = () => {
             }}
           />
           <TextField
-            label="Siret"
+            label="Identifiant société"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -168,7 +168,7 @@ const Owner = () => {
             }}
           />
           <TextField
-            label="Adresse publique du proriétaire"
+            label="Adresse publique de la société"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -212,7 +212,7 @@ const Owner = () => {
         </Alert>
       </Snackbar>
 
-      <LoggerComponent />
+      {/* <LoggerComponent /> */}
     </Container>
   );
 };

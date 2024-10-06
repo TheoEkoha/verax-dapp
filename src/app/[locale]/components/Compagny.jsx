@@ -128,17 +128,23 @@ const Compagny = ({ isAcompagnyOwner }) => {
         address: contractAddress,
         abi: contractAbi,
         functionName: "getAllCompagnyProducts",
-        args: [compagnyId],
+        args: [Number(compagnyId)],
         account: address,
       });
+
+      const productsFetched = data
+      .filter(
+        (row) => row.productId !== 0n && row.compagnyId !== 0n && row.productRef !== "" && row.url !== ""
+      )
+      .map((row, key) => ({
+        id: Number(key),
+        productRef: row.productRef,
+        productId: row.productId,
+      }));
       setProducts(
-        data.map((row, key) => ({
-          id: Number(key),
-          productRef: row.productRef,
-          productId: row.productId,
-        }))
+        productsFetched
       );
-      console.log(products);
+      console.log("products", productsFetched);
     } catch (error) {
       handleOpenSnack({ stat: true, type: "error", message: error.message });
     }
@@ -175,17 +181,15 @@ const Compagny = ({ isAcompagnyOwner }) => {
       });
     }
   }, [isConfirmed, errorConfirmation]);
-
+  
   useEffect(() => {
-    console.log('Company -> ', isAcompagnyOwner.toString())
-    setCompagnyId(isAcompagnyOwner.toString());
-    fetchProducts();
+    if (isAcompagnyOwner) {
+      const id = isAcompagnyOwner.toString();
+      setCompagnyId(id);
+      fetchProducts();
+    }
   }, [isAcompagnyOwner, compagnyId]);
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
+  
   return (
     <Container maxWidth="sm">
       <div

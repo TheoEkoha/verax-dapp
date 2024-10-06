@@ -81,11 +81,11 @@ const Logger = () => {
             );
           })}
       </CardContent>
-      <CardActions>
+      {/* <CardActions>
         <Button size="large" onClick={fetchLogs}>
           Rafraîchir les évènements
         </Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 };
