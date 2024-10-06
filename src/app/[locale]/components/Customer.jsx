@@ -56,13 +56,29 @@ const Customer = () => {
         functionName: "getUserIdsProductsToRate",
         account: address,
       });
+
+      
       setProducts(
-        data.map((row, key) => ({
-          id: Number(key),
-          productId: Number(row.productId),
-          compagnyId: Number(row.compagnyId),
-        }))
+        data.map((row, key) => {
+          console.log("row.compagnyId --> ", row.compagnyId);
+          
+          // Convertir compagnyId en Number uniquement s'il est dans la limite
+          let compagnyIdNumber;
+          if (row.compagnyId <= BigInt(Number.MAX_SAFE_INTEGER)) {
+            compagnyIdNumber = Number(row.compagnyId);
+          } else {
+            compagnyIdNumber = row.compagnyId.toString(); // Conservez-le comme string si trop grand
+            console.log("La valeur est trop grande pour Number, utilisez BigInt ou string à la place :", compagnyIdNumber);
+          }
+      
+          return {
+            id: Number(key),
+            productId: Number(row.productId),
+            compagnyId: compagnyIdNumber,
+          };
+        })
       );
+      
     } catch (error) {
       handleOpenSnack({ stat: true, type: "error", message: error.message });
     }
@@ -238,7 +254,6 @@ const Customer = () => {
           paddingBottom: 5,
         }}
       >
-        <Divider textAlign="left">Notez vos produits</Divider>
         {hash && (
           <Divider style={{ marginTop: 10 }}>
             <Chip label={hash} size="small" />
@@ -255,7 +270,7 @@ const Customer = () => {
                       <ChildComponent id={row.productId} />
                       Identifiant Produit : {row.productId}
                       <br />
-                      Identifiant Compagnie : {row.compagnyId}
+                      Identifiant Compagnie : {row.compagnyId.toString()}
                       <Box
                         sx={{
                           "& > legend": { mt: 2 },

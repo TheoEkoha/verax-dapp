@@ -1,5 +1,5 @@
 // export const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-export const contractAddress = "0x5DB9A7629912EBF95876228C24A848de0bfB43A9"; // //fuji
+export const contractAddress = "0x4475A8FBeF5Cf4a92a484B6f5602A91F3abC72D8"; // 06/10 - 02:35
 export const contractAbi = [
 	{
 		"inputs": [

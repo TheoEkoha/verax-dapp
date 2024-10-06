@@ -115,9 +115,9 @@ const Owner = () => {
           backgroundColor: "#ECF0F1",
         }}
       >
-        <b>COMPAGNY REGISTRATION</b>
+        <b>CRÉATION DE LA COMPAGNIE</b>
         <br />
-        OWNER : {address}
+        ADMINISTRATEUR : {address}
       </div>
       <div
         style={{
@@ -128,7 +128,7 @@ const Owner = () => {
       >
         <div>
           <TextField
-            label="Name"
+            label="Nom de la société"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -138,7 +138,7 @@ const Owner = () => {
             }}
           />
           <TextField
-            label="City"
+            label="Ville"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -148,7 +148,7 @@ const Owner = () => {
             }}
           />
           <TextField
-            label="Siret number"
+            label="Siret"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -158,7 +158,7 @@ const Owner = () => {
             }}
           />
           <TextField
-            label="Subscription type"
+            label="Type d'abonnement"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -168,7 +168,7 @@ const Owner = () => {
             }}
           />
           <TextField
-            label="Compagny owner address"
+            label="Adresse publique du proriétaire"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -186,7 +186,7 @@ const Owner = () => {
             variant="contained"
             color="primary"
           >
-            <span>Submit</span>
+            <span>Valider</span>
           </LoadingButton>
           {hash && (
             <Divider style={{ marginTop: 20 }}>

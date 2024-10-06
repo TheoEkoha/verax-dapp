@@ -67,7 +67,7 @@ export default function DashboardPage() {
             {t('Booster')}
           </span>
           <br />
-          {t('to_Your_NextJS_Apps')}
+          {/* {t('to_Your_NextJS_Apps')} */}
         </h1>
         <div className='my-6 px-20 text-center text-2xl text-text-secondary'>
           {t(

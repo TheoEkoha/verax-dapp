@@ -177,6 +177,7 @@ const Compagny = ({ isAcompagnyOwner }) => {
   }, [isConfirmed, errorConfirmation]);
 
   useEffect(() => {
+    console.log('Company -> ', isAcompagnyOwner.toString())
     setCompagnyId(isAcompagnyOwner.toString());
     fetchProducts();
   }, [isAcompagnyOwner, compagnyId]);
@@ -194,9 +195,9 @@ const Compagny = ({ isAcompagnyOwner }) => {
           backgroundColor: "#ECF0F1",
         }}
       >
-        <b>CUSTOMERS AND PRODUCTS REGISTRATION</b>
+        <b>CLIENTS ET CRÉATION DE PRODUITS</b>
         <br />
-        COMPANY ID : {compagnyId}
+        Identifiant Compagnie : {compagnyId}
       </div>
       <div
         style={{
@@ -205,10 +206,10 @@ const Compagny = ({ isAcompagnyOwner }) => {
           paddingBottom: 5,
         }}
       >
-        <Divider textAlign="left">Products registration</Divider>
+        <Divider textAlign="left">Création d'un produit</Divider>
         <div>
           <TextField
-            label="Product reference"
+            label="Référence produit"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -233,7 +234,7 @@ const Compagny = ({ isAcompagnyOwner }) => {
             variant="contained"
             color="primary"
           >
-            <span>Submit</span>
+            <span>Valider</span>
           </LoadingButton>
         </div>
       </div>
@@ -244,9 +245,9 @@ const Compagny = ({ isAcompagnyOwner }) => {
           paddingBottom: 5,
         }}
       >
-        <Divider textAlign="left">Customers registration</Divider>
+        <Divider textAlign="left">Enregistrement d'un client</Divider>
         <TextField
-          label="Customer address"
+          label="Adresse publique du client"
           variant="outlined"
           fullWidth
           margin="normal"
@@ -256,7 +257,7 @@ const Compagny = ({ isAcompagnyOwner }) => {
           }}
         />
         <FormControl sx={{ width: "100%" }}>
-          <InputLabel id="demo-simple-select-helper-label">Product</InputLabel>
+          <InputLabel id="demo-simple-select-helper-label">Produit</InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
@@ -268,7 +269,7 @@ const Compagny = ({ isAcompagnyOwner }) => {
             {products &&
               products.map((row) => (
                 <MenuItem value={row.productId} key={crypto.randomUUID()}>
-                  Product reference : {row.productRef}
+                  Référence produit : {row.productRef}
                 </MenuItem>
               ))}
           </Select>
@@ -287,7 +288,7 @@ const Compagny = ({ isAcompagnyOwner }) => {
           variant="contained"
           color="primary"
         >
-          <span>Submit</span>
+          <span>Valider</span>
         </LoadingButton>
       </div>
       <Snackbar

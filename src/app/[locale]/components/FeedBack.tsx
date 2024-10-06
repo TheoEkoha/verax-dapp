@@ -155,6 +155,8 @@ export const FeedBack = (props: FeedBackProps) => {
     setExpanded(!expanded);
   };
 
+  console.log("productId ", productId)
+
   return (
     <Card >
       <ChildFeedBackHeader id={productId} note={3} owner={owner} description={description}/>

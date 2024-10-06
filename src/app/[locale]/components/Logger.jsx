@@ -47,7 +47,7 @@ const Logger = () => {
   return (
     <Card variant="outlined">
       <CardContent>
-        <Divider style={{ marginBottom: 10 }}>Smart contract events</Divider>
+        <Divider style={{ marginBottom: 10 }}>Évènement du Smart Contract</Divider>
         {logs &&
           logs.map((log) => {
             return (
@@ -62,7 +62,7 @@ const Logger = () => {
                     {log.name === "CompagnyRegistered" && (
                       <>
                         <div>
-                          <b>{log.name}</b> ::: COMPAGNY ID : {log.compagnyId}
+                          <b>{log.name}</b> ::: IDENTIFIANT COMPAGNIE : {log.compagnyId}
                         </div>
                         <div>Owner : {log.ownerAddr}</div>
                       </>
@@ -70,8 +70,8 @@ const Logger = () => {
                     {log.name === "ProductRegistered" && (
                       <>
                         <div>
-                          <b>{log.name}</b> ::: COMPAGNY ID : {log.compagnyId}
-                          <div>Product reference : {log.productRef}</div>
+                          <b>{log.name}</b> ::: IDENTIFIANT COMPAGNIE : {log.compagnyId}
+                          <div>Référence produit : {log.productRef}</div>
                         </div>
                       </>
                     )}
@@ -83,7 +83,7 @@ const Logger = () => {
       </CardContent>
       <CardActions>
         <Button size="large" onClick={fetchLogs}>
-          Refresh events
+          Rafraîchir les évènements
         </Button>
       </CardActions>
     </Card>
