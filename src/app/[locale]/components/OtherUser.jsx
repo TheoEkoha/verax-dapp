@@ -94,15 +94,17 @@ const OtherUser = () => {
         functionName: "getAllFeedback",
         account: address,
       });
+      const feedbacks = data.map((row, key) => ({
+        id: Number(key),
+        userAddress: row.userAddress,
+        productId: Number(row.productId),
+        compagnyId: Number(row.compagnyId),
+        note: Number(row.note),
+        comment: row.comment,
+        likeCount: row.likeCount,
+      }))
       setFeedbacks(
-        data.map((row, key) => ({
-          id: Number(key),
-          productId: Number(row.productId),
-          compagnyId: Number(row.compagnyId),
-          note: Number(row.note),
-          comment: row.comment,
-          likeCount: row.likeCount,
-        }))
+        feedbacks
       );
     } catch (error) {
       handleOpenSnack({ stat: true, type: "error", message: error.message });
@@ -146,7 +148,7 @@ const OtherUser = () => {
                   feedbacks.map((row, i) =>
                     row.productId !== 0 && row.allowed !== false ? (
                       <Grid item xs={12} sm={6} key={row.id}>
-                        <Box sx={{ minWidth: 275, marginTop: 2 }}>
+                        <Box sx={{ minWidth: 275, height: 300, marginTop: 2 }}>
                           <FeedBack
                             likeCount={Number(row.likeCount)}
                             handleLike={() => like(row.id)}
@@ -173,11 +175,12 @@ const OtherUser = () => {
             )}
               <Grid container spacing={2}>
                 {feedbacks &&
-                  feedbacks.map((row, i) =>
+                  feedbacks.filter((f) => f.userAddress === address).map((row, i) =>
                     row.productId !== 0 && row.allowed !== false ? (
                       <Grid item xs={12} sm={6} key={row.id}>
-                        <Box sx={{ minWidth: 275, marginTop: 2 }}>
+                        <Box key={row.id} sx={{ minWidth: 275,height: 300, marginTop: 2 }}>
                           <FeedBack
+                            key={row.id}
                             likeCount={Number(row.likeCount)}
                             handleLike={() => like(row.id)}
                             description={row.comment}
@@ -189,7 +192,15 @@ const OtherUser = () => {
                         </Box>
                       </Grid>
                     ) : null
-                  )}
+                  )
+                  }
+                  {
+                    feedbacks.filter((f) => f.userAddress === address).length === 0 && (
+                      <Box sx={{ minWidth: 275, marginTop: 5 }}>
+                        <p>Vous n'avez pas crée d'avis</p>
+                      </Box>
+                    )
+                  }
               </Grid>
             </Box>
             )}

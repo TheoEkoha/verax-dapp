@@ -158,7 +158,7 @@ export const FeedBack = (props: FeedBackProps) => {
   console.log("productId ", productId)
 
   return (
-    <Card >
+    <Card style={{height: 300}}>
       <ChildFeedBackHeader id={productId} note={3} owner={owner} description={description}/>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" onClick={handleLike}>

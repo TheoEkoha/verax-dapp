@@ -26,6 +26,17 @@ import { publicClient } from "../../../utils/client";
 
 const Customer = () => {
   const { address } = useAccount();
+  const {
+    data: isAcustomer,
+    error: errorIsAcustomer,
+    isPending: isPendingIsAcustomer,
+    refetch: refetchIsAcustomer,
+  } = useReadContract({
+    address: contractAddress,
+    abi: contractAbi,
+    functionName: "isAcustomer",
+    account: address,
+  });
 
   const [value, setValue] = React.useState(0);
   const [products, setProducts] = useState([]);
@@ -48,7 +59,18 @@ const Customer = () => {
       message: stateSnack.message,
     });
 
+  
   const getUserIdsProductsToRate = async () => {
+
+    try {
+
+      console.log("is a customer -> ", isAcustomer)
+      if (!isAcustomer)
+        return []
+    } catch (error) {
+      handleOpenSnack({ stat: true, type: "error", message: error.message });
+    }
+
     try {
       const data = await publicClient.readContract({
         address: contractAddress,
@@ -56,8 +78,6 @@ const Customer = () => {
         functionName: "getUserIdsProductsToRate",
         account: address,
       });
-
-      
       setProducts(
         data.map((row, key) => {
           console.log("row.compagnyId --> ", row.compagnyId);

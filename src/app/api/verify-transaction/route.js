@@ -89,6 +89,10 @@ export async function POST(request) {
 
 async function addUserProduct(public_key, company_id, product_id) {
   try {
+    // TODO: Cette approche est biensûr fonctionnel mais pas la meilleur manière de gérer la chose.
+    // L'idée serait d'utiliser un Key Manager (comme peut le faire Tatum). C'est un système secure
+    // à mettre en place qui permet d'avoir plus de vérification lors de la signature ET surtout de ne
+    // pas utiliser la privateKey comme ça mais d'avoir une signatureId qui permettrait de signer à la volé.
     const provider = new ethers.JsonRpcProvider(blockchainConfig.rpcUrl);
     let privateKey = process.env.NEXT_PUBLIC_PK_LEDGER;
     if (company_id === 666666)
